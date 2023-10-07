@@ -26,12 +26,15 @@ export class Character {
     }
 
     add(mapview) {
-        if(this.map == mapview.mapid) {
+        if (this.map == mapview.mapid) {
             let position = mapview.map.unproject([this.position.x, this.position.y], HnHMaxZoom);
-            this.marker = L.marker(position, {title: this.name});
-            this.marker.on("click", this.callCallback.bind(this));
-            this.marker.addTo(mapview.map)
-        };
+
+            // Create a marker with a tooltip (player name)
+            this.marker = L.marker(position)
+                .bindTooltip(this.name, { permanent: true, direction: 'top', opacity: 1 })
+                .on("click", this.callCallback.bind(this))
+                .addTo(mapview.map);
+        }
     }
 
     update(mapview, updated) {
@@ -59,3 +62,4 @@ export class Character {
         }
     }
 }
+

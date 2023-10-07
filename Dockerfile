@@ -9,7 +9,7 @@ RUN go mod download
 COPY . .
 RUN go build
 
-FROM alpine as frontendbuilder
+FROM alpine:3.11.0 as frontendbuilder
 
 RUN mkdir /frontend
 WORKDIR /frontend
@@ -22,7 +22,7 @@ RUN npm install
 COPY frontend/ ./
 RUN npm run build
 
-FROM alpine
+FROM alpine:3.11.0
 
 RUN mkdir /hnh-map
 WORKDIR /hnh-map
@@ -34,3 +34,4 @@ COPY public ./public
 
 EXPOSE 8080
 CMD /hnh-map/hnh-map -grids=/map
+
